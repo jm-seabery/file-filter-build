@@ -5,6 +5,7 @@ on:
     paths:
       - 'src/common/**'
       - 'src/execB/**'
+      - '.github/workflows/filter-run-execB.yml'
 
 defaults:
  run:
