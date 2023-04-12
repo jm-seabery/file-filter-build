@@ -6,6 +6,8 @@ class classCommon
         classCommon()
         {
             printf("class common");
+
+            // common change
         }
 
     private:
