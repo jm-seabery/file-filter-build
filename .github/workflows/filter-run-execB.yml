@@ -1,10 +1,10 @@
-name: Test filtered workflow run execA
+name: Test filtered workflow run execB
 
 on:
   push:
     paths:
       - 'src/common/**'
-      - 'src/execA/**'
+      - 'src/execB/**'
 
 defaults:
  run:
@@ -59,12 +59,12 @@ jobs:
       run: ninja --version
 
     # Run the cmake configure & generate
-    - name: Configure A
+    - name: Configure B
       run: |
         cmake -S . -B _build -DCMAKE_BUILD_TYPE:STRING=Release -G "Ninja"
 
     # Build the project
-    - name: Build A
+    - name: Build B
       run: |
-        cmake --build _build --target test-A
+        cmake --build _build --target test-B
 
