@@ -5,6 +5,7 @@ on:
     paths:
       - 'src/common/**'
       - 'src/execA/**'
+      - '.github/workflows/filter-run-execA.yml'
 
 defaults:
  run:
