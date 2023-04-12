@@ -1,0 +1,66 @@
+name: Test filtered workflow run execA
+
+on: [push]
+
+defaults:
+ run:
+  working-directory: ./
+
+jobs:
+  build:
+    name: Ubuntu 20 Compile
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            os: ubuntu-20.04,
+            build_type: "Release", cc: "gcc", cxx: "g++"
+          }
+
+    steps:
+
+    # Get Latest code on this branch
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    # 
+    # Assuming no GCC we can set this up here
+    #- name: Set up GCC 
+    #  shell: bash
+    #  run:   |
+    #    sudo apt update
+    #    sudo apt install -y software-properties-common
+    #    sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+    #    sudo apt-get update 
+    #    sudo apt install -y gcc-10 g++-10
+    #    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 --slave /usr/bin/gcov gcov /usr/bin/gcov-10
+    
+    # Test CMake now exists
+    - name: CMake Exists Test
+      run: cmake --version
+
+    # Install ninja build
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+      with:
+        version: '1.11.1'
+
+    # Test Ninja build now exists
+    - name: Ninja Exists Test
+      run: ninja --version
+
+    # Run the cmake configure & generate
+    - name: Configure A
+      run: |
+        cmake -S . -B _build -DCMAKE_BUILD_TYPE:STRING=Release -G "Ninja"
+
+    # Build the project
+    - name: Build A
+      run: |
+        cmake --build _build --target test-A
+
