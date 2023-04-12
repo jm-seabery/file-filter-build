@@ -7,5 +7,6 @@ int main(int argc, char **argv)
 {
     classA mountClass();
 
+// change on A
     return 0;
 }
