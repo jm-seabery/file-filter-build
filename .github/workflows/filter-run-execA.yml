@@ -70,7 +70,7 @@ jobs:
         cmake --build _build --target test-A
 
     - name: Upload files to S3
-      run: aws s3 cp src/common/classCommon.h s3://${{secrets.S3_MA_PATH}}/SLD/SLD5_0_0/
+      run: aws s3 cp src/common/classCommon.h ${{secrets.S3_MA_PATH}}/SLD/SLD5_0_0/
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_JM }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_JM }}
